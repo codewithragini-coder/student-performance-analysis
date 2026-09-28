@@ -1,0 +1,596 @@
+#include <iostream.h>
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+
+void showRooms()
+{
+    cout << "\n========== AVAILABLE ROOMS ==========\n";
+    cout << "Room 101 - Deluxe  - Rs. 2500/night\n";
+    cout << "Room 102 - Standard - Rs. 1800/night\n";
+    cout << "Room 103 - Suite   - Rs. 4000/night\n";
+}
+
+int getPrice(int room)
+{
+    if (room == 101)
+        return 2500;
+    else if (room == 102)
+        return 1800;
+    else if (room == 103)
+        return 4000;
+    else
+        return 0;
+}
+
+void showServices()
+{
+    cout << "\n========== RESORT SERVICES ==========\n";
+    cout << "1. Swimming Pool - Rs. 500\n";
+    cout << "2. Spa           - Rs. 1000\n";
+    cout << "3. Room Cleaning - Rs. 300\n";
+    cout << "4. Restaurant    - Available\n";
+}
+
+int main()
+{
+    int mainChoice;
+    int choice;
+    int room, nights, price, total;
+
+    /* Booking information */
+    int bookedRoom = 0;
+    int bookedNights = 0;
+
+    /* Payment information */
+    int paymentDone = 0;
+    int paymentMethod = 0;
+
+    /* Customer information */
+    char name[50] = "";
+    char username[30] = "";
+    char password[30] = "";
+    char feedback[150] = "";
+
+    clrscr();
+
+    do
+    {
+        cout << "\n============================================\n";
+        cout << "             PARADISE RESORT\n";
+        cout << "          RESORT MANAGEMENT SYSTEM\n";
+        cout << "============================================\n";
+
+        cout << "\n1. Customer Login";
+        cout << "\n2. Admin Login";
+        cout << "\n3. Exit";
+
+        cout << "\n\nEnter choice: ";
+        cin >> mainChoice;
+
+
+        /* ================================================= */
+        /*                    CUSTOMER                       */
+        /* ================================================= */
+
+        if (mainChoice == 1)
+        {
+            cout << "\n========== CUSTOMER LOGIN ==========\n";
+
+            cout << "Enter Customer Name: ";
+            cin >> name;
+
+            cout << "Enter Password: ";
+            cin >> password;
+
+            cout << "\nLogin Successful!\n";
+
+            do
+            {
+                cout << "\n\n========== CUSTOMER HOME ==========\n";
+                cout << "1. View Rooms\n";
+                cout << "2. Room Details\n";
+                cout << "3. Check Availability\n";
+                cout << "4. Book Room\n";
+                cout << "5. My Booking\n";
+                cout << "6. Payment\n";
+                cout << "7. Services\n";
+                cout << "8. Profile\n";
+                cout << "9. Feedback\n";
+                cout << "10. Logout";
+
+                cout << "\n\nEnter choice: ";
+                cin >> choice;
+
+
+                switch(choice)
+                {
+                    /* VIEW ROOMS */
+
+                    case 1:
+                        showRooms();
+                        break;
+
+
+                    /* ROOM DETAILS */
+
+                    case 2:
+                        cout << "\n========== ROOM DETAILS ==========\n";
+
+                        cout << "\nRoom 101 - Deluxe Room";
+                        cout << "\nPrice: Rs. 2500 per night";
+                        cout << "\nAC, TV, Wi-Fi, Breakfast";
+
+                        cout << "\n\nRoom 102 - Standard Room";
+                        cout << "\nPrice: Rs. 1800 per night";
+                        cout << "\nAC, TV, Wi-Fi";
+
+                        cout << "\n\nRoom 103 - Suite Room";
+                        cout << "\nPrice: Rs. 4000 per night";
+                        cout << "\nLuxury Room, AC, TV, Wi-Fi, Breakfast";
+
+                        break;
+
+
+                    /* CHECK AVAILABILITY */
+
+                    case 3:
+                        cout << "\n========== ROOM AVAILABILITY ==========\n";
+
+                        if (bookedRoom == 0)
+                        {
+                            cout << "Room 101 - Available\n";
+                            cout << "Room 102 - Available\n";
+                            cout << "Room 103 - Available\n";
+                        }
+                        else
+                        {
+                            cout << "Room 101 - ";
+
+                            if (bookedRoom == 101)
+                                cout << "Booked\n";
+                            else
+                                cout << "Available\n";
+
+                            cout << "Room 102 - ";
+
+                            if (bookedRoom == 102)
+                                cout << "Booked\n";
+                            else
+                                cout << "Available\n";
+
+                            cout << "Room 103 - ";
+
+                            if (bookedRoom == 103)
+                                cout << "Booked\n";
+                            else
+                                cout << "Available\n";
+                        }
+
+                        break;
+
+
+                    /* BOOK ROOM */
+
+                    case 4:
+                        cout << "\n========== ROOM BOOKING ==========\n";
+
+                        if (bookedRoom != 0)
+                        {
+                            cout << "You already have a booking.\n";
+                            cout << "Room Number: " << bookedRoom << "\n";
+                            cout << "Nights: " << bookedNights << "\n";
+                            break;
+                        }
+
+                        showRooms();
+
+                        cout << "\nEnter Room Number: ";
+                        cin >> room;
+
+                        price = getPrice(room);
+
+                        if (price == 0)
+                        {
+                            cout << "Invalid Room Number!\n";
+                            break;
+                        }
+
+                        cout << "Enter Number of Nights: ";
+                        cin >> nights;
+
+                        if (nights <= 0)
+                        {
+                            cout << "Invalid number of nights!\n";
+                            break;
+                        }
+
+                        bookedRoom = room;
+                        bookedNights = nights;
+
+                        total = price * nights;
+
+                        cout << "\n========== BOOKING CONFIRMED ==========\n";
+                        cout << "Customer: " << name << "\n";
+                        cout << "Room Number: " << bookedRoom << "\n";
+                        cout << "Nights: " << bookedNights << "\n";
+                        cout << "Room Price: Rs. " << price << "\n";
+                        cout << "Total Amount: Rs. " << total << "\n";
+
+                        cout << "\nRoom booked successfully!\n";
+
+                        break;
+
+
+                    /* MY BOOKING */
+
+                    case 5:
+                        cout << "\n========== MY BOOKING ==========\n";
+
+                        if (bookedRoom == 0)
+                        {
+                            cout << "No booking found.\n";
+                        }
+                        else
+                        {
+                            price = getPrice(bookedRoom);
+                            total = price * bookedNights;
+
+                            cout << "Customer Name : " << name << "\n";
+                            cout << "Room Number   : " << bookedRoom << "\n";
+                            cout << "Nights        : " << bookedNights << "\n";
+                            cout << "Price/Night   : Rs. " << price << "\n";
+                            cout << "Total Amount  : Rs. " << total << "\n";
+
+                            if (paymentDone == 1)
+                                cout << "Payment       : PAID\n";
+                            else
+                                cout << "Payment       : PENDING\n";
+                        }
+
+                        break;
+
+
+                    /* PAYMENT */
+
+                    case 6:
+                        cout << "\n========== PAYMENT ==========\n";
+
+                        if (bookedRoom == 0)
+                        {
+                            cout << "Please book a room first.\n";
+                        }
+                        else if (paymentDone == 1)
+                        {
+                            cout << "Payment has already been completed.\n";
+                        }
+                        else
+                        {
+                            price = getPrice(bookedRoom);
+                            total = price * bookedNights;
+
+                            cout << "Room Number : " << bookedRoom << "\n";
+                            cout << "Nights      : " << bookedNights << "\n";
+                            cout << "Total Bill  : Rs. " << total << "\n";
+
+                            cout << "\n1. Cash";
+                            cout << "\n2. Card";
+                            cout << "\n3. UPI";
+
+                            cout << "\n\nSelect Payment Method: ";
+                            cin >> paymentMethod;
+
+                            if (paymentMethod >= 1 &&
+                                paymentMethod <= 3)
+                            {
+                                paymentDone = 1;
+
+                                cout << "\nPayment Successful!\n";
+                                cout << "Amount Paid: Rs. " << total << "\n";
+                            }
+                            else
+                            {
+                                cout << "Invalid Payment Method!\n";
+                                paymentMethod = 0;
+                            }
+                        }
+
+                        break;
+
+
+                    /* SERVICES */
+
+                    case 7:
+                        showServices();
+                        break;
+
+
+                    /* PROFILE */
+
+                    case 8:
+                        cout << "\n========== CUSTOMER PROFILE ==========\n";
+
+                        cout << "Customer Name: " << name << "\n";
+
+                        if (bookedRoom != 0)
+                            cout << "Booked Room: " << bookedRoom << "\n";
+                        else
+                            cout << "Booked Room: None\n";
+
+                        break;
+
+
+                    /* FEEDBACK */
+
+                    case 9:
+                        cout << "\n========== FEEDBACK ==========\n";
+
+                        cout << "Enter your feedback: ";
+
+                        fflush(stdin);
+                        gets(feedback);
+
+                        cout << "\nThank you for your valuable feedback!\n";
+
+                        break;
+
+
+                    /* LOGOUT */
+
+                    case 10:
+                        cout << "\nCustomer Logout Successful!\n";
+                        break;
+
+
+                    default:
+                        cout << "\nInvalid choice!\n";
+                }
+
+            } while(choice != 10);
+        }
+
+
+        /* ================================================= */
+        /*                      ADMIN                        */
+        /* ================================================= */
+
+        else if (mainChoice == 2)
+        {
+            cout << "\n========== ADMIN LOGIN ==========\n";
+
+            cout << "Enter Username: ";
+            cin >> username;
+
+            cout << "Enter Password: ";
+            cin >> password;
+
+
+            if (strcmp(username, "admin") == 0 &&
+                strcmp(password, "1234") == 0)
+            {
+                cout << "\nAdmin Login Successful!\n";
+
+                do
+                {
+                    cout << "\n\n========== ADMIN DASHBOARD ==========\n";
+                    cout << "1. View Rooms\n";
+                    cout << "2. View Booking\n";
+                    cout << "3. View Customer\n";
+                    cout << "4. Manage Services\n";
+                    cout << "5. View Payment\n";
+                    cout << "6. View Feedback\n";
+                    cout << "7. Logout";
+
+                    cout << "\n\nEnter choice: ";
+                    cin >> choice;
+
+
+                    switch(choice)
+                    {
+                        /* ADMIN VIEW ROOMS */
+
+                        case 1:
+                            showRooms();
+
+                            cout << "\n========== ROOM STATUS ==========\n";
+
+                            if (bookedRoom == 0)
+                            {
+                                cout << "Room 101 - Available\n";
+                                cout << "Room 102 - Available\n";
+                                cout << "Room 103 - Available\n";
+                            }
+                            else
+                            {
+                                cout << "Room 101 - ";
+
+                                if (bookedRoom == 101)
+                                    cout << "Booked\n";
+                                else
+                                    cout << "Available\n";
+
+                                cout << "Room 102 - ";
+
+                                if (bookedRoom == 102)
+                                    cout << "Booked\n";
+                                else
+                                    cout << "Available\n";
+
+                                cout << "Room 103 - ";
+
+                                if (bookedRoom == 103)
+                                    cout << "Booked\n";
+                                else
+                                    cout << "Available\n";
+                            }
+
+                            break;
+
+
+                        /* ADMIN VIEW BOOKING */
+
+                        case 2:
+                            cout << "\n========== BOOKING DETAILS ==========\n";
+
+                            if (bookedRoom == 0)
+                            {
+                                cout << "No booking available.\n";
+                            }
+                            else
+                            {
+                                price = getPrice(bookedRoom);
+                                total = price * bookedNights;
+
+                                cout << "Customer Name : " << name << "\n";
+                                cout << "Room Number   : " << bookedRoom << "\n";
+                                cout << "Nights        : " << bookedNights << "\n";
+                                cout << "Price/Night   : Rs. " << price << "\n";
+                                cout << "Total Amount  : Rs. " << total << "\n";
+
+                                if (paymentDone == 1)
+                                    cout << "Payment Status: PAID\n";
+                                else
+                                    cout << "Payment Status: PENDING\n";
+                            }
+
+                            break;
+
+
+                        /* ADMIN VIEW CUSTOMER */
+
+                        case 3:
+                            cout << "\n========== CUSTOMER DETAILS ==========\n";
+
+                            if (strlen(name) == 0)
+                            {
+                                cout << "No customer information available.\n";
+                            }
+                            else
+                            {
+                                cout << "Customer Name: " << name << "\n";
+
+                                if (bookedRoom == 0)
+                                {
+                                    cout << "Booking Status: No Booking\n";
+                                }
+                                else
+                                {
+                                    cout << "Booking Status: Booked\n";
+                                    cout << "Room Number: " << bookedRoom << "\n";
+                                    cout << "Number of Nights: "
+                                         << bookedNights << "\n";
+                                }
+                            }
+
+                            break;
+
+
+                        /* ADMIN MANAGE SERVICES */
+
+                        case 4:
+                            cout << "\n========== MANAGE SERVICES ==========\n";
+
+                            showServices();
+
+                            cout << "\nAll services are currently available.\n";
+
+                            break;
+
+
+                        /* ADMIN VIEW PAYMENT */
+
+                        case 5:
+                            cout << "\n========== PAYMENT DETAILS ==========\n";
+
+                            if (bookedRoom == 0)
+                            {
+                                cout << "No payment information available.\n";
+                            }
+                            else
+                            {
+                                price = getPrice(bookedRoom);
+                                total = price * bookedNights;
+
+                                cout << "Customer Name : " << name << "\n";
+                                cout << "Room Number   : " << bookedRoom << "\n";
+                                cout << "Total Amount  : Rs. " << total << "\n";
+
+                                if (paymentDone == 1)
+                                {
+                                    cout << "Payment Status: PAID\n";
+
+                                    cout << "Payment Method: ";
+
+                                    if (paymentMethod == 1)
+                                        cout << "Cash\n";
+                                    else if (paymentMethod == 2)
+                                        cout << "Card\n";
+                                    else if (paymentMethod == 3)
+                                        cout << "UPI\n";
+                                }
+                                else
+                                {
+                                    cout << "Payment Status: PENDING\n";
+                                }
+                            }
+
+                            break;
+
+
+                        /* ADMIN VIEW FEEDBACK */
+
+                        case 6:
+                            cout << "\n========== CUSTOMER FEEDBACK ==========\n";
+
+                            if (strlen(feedback) == 0)
+                            {
+                                cout << "No feedback available.\n";
+                            }
+                            else
+                            {
+                                cout << "Customer: " << name << "\n";
+                                cout << "Feedback: " << feedback << "\n";
+                            }
+
+                            break;
+
+
+                        /* ADMIN LOGOUT */
+
+                        case 7:
+                            cout << "\nAdmin Logout Successful!\n";
+                            break;
+
+
+                        default:
+                            cout << "\nInvalid choice!\n";
+                    }
+
+                } while(choice != 7);
+            }
+            else
+            {
+                cout << "\nInvalid Admin Username or Password!\n";
+            }
+        }
+
+
+        /* EXIT */
+
+        else if (mainChoice == 3)
+        {
+            cout << "\nThank you for using Paradise Resort!\n";
+        }
+
+
+        else
+        {
+            cout << "\nInvalid Choice!\n";
+        }
+
+    } while(mainChoice != 3);
+
+
+    getch();
+    return 0;
+}
