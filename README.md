@@ -1,2 +1,2 @@
-# student-performance-analysis
+# resort management system 
 beginner-friendly data
